@@ -28,8 +28,12 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'dotenv-rails'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # debugger
+  gem 'pry'
+  # for fake data creation
+  gem 'factory_bot_rails'
+  # for TDD
+  gem 'rspec-rails', '~> 5.0.0'
   # linter
   gem 'rubocop', '~> 1.19', require: false
 end
