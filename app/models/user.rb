@@ -12,4 +12,5 @@
 #
 class User < ApplicationRecord
   validates :email, :fullname, :encrypted_password, presence: true
+  validates_uniqueness_of :email
 end
