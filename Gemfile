@@ -28,6 +28,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'dotenv-rails'
 
 group :development, :test do
+  gem 'annotate'
   # debugger
   gem 'pry'
   # for fake data creation
@@ -46,3 +47,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+group :test do
+  gem 'shoulda-matchers', '~> 5.0'
+end
