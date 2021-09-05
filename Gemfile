@@ -33,6 +33,10 @@ group :development, :test do
   gem 'pry'
   # for fake data creation
   gem 'factory_bot_rails'
+  # for JSON:API specification
+  gem 'jsonapi.rb'
+  # external serializer
+  gem 'jsonapi-serializer'
   # for TDD
   gem 'rspec-rails', '~> 5.0.0'
   # linter

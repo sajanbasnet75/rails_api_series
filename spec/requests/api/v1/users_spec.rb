@@ -7,7 +7,8 @@ RSpec.describe 'Api::V1::Users', type: :request do
       total_users = User.all.count
       get api_v1_users_path
       expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body).count).to eq(total_users)
+      resp = JSON.parse(response.body)
+      expect(resp['data'].count).to eq(total_users)
     end
   end
 
@@ -17,7 +18,8 @@ RSpec.describe 'Api::V1::Users', type: :request do
       expected_response = { 'email' => user.email }
       get api_v1_user_path(id: user.id)
       expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body)).to include(expected_response)
+      resp = JSON.parse(response.body)
+      expect(resp['data']['attributes']).to include(expected_response)
     end
   end
 
