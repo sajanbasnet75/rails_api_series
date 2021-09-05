@@ -17,7 +17,7 @@ module Api
         if user.save
           render jsonapi: user, status: :created, code: '201'
         else
-          render jsonapi_errors: user.errors, 
+          render jsonapi_errors: user.errors,
                  status: :unprocessable_entity, code: '422'
         end
       end
@@ -27,7 +27,7 @@ module Api
         if user.update(user_params)
           render jsonapi: user, status: :ok, code: '200'
         else
-          render jsonapi_errors: user.errors, 
+          render jsonapi_errors: user.errors,
                  status: :unprocessable_entity, code: '422'
         end
       end
@@ -37,7 +37,7 @@ module Api
         if user.destroy
           render jsonapi: user, status: :ok, code: '200'
         else
-          render jsonapi_errors: user.errors, 
+          render jsonapi_errors: user.errors,
                  status: :unprocessable_entity, code: '422'
         end
       end
