@@ -3,15 +3,18 @@
 module Api
   module V1
     class UsersController < BaseController
+      # GET api/v1/users
       def index
         render jsonapi: User.all
       end
 
+      # GET api/v1/users/:id
       def show
         @user = User.find(params[:id])
         render jsonapi: @user
       end
 
+      # POST api/v1/users
       def create
         user = User.new(user_params)
         if user.save
@@ -22,6 +25,7 @@ module Api
         end
       end
 
+      # PUT/PATCH api/v1/users/:id
       def update
         user = User.find(params[:id])
         if user.update(user_params)
@@ -32,6 +36,7 @@ module Api
         end
       end
 
+      # DELETE api/v1/users/:id
       def destroy
         user = User.find(params[:id])
         if user.destroy
