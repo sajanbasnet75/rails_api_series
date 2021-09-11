@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < BaseController
       def index
         render jsonapi: User.all
       end
