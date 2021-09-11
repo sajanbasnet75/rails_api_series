@@ -32,7 +32,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
         user: {
           fullname: 'New User',
           email: 'new@gmail.com',
-          encrypted_password: 'asdasd12ad'
+          password: 'asdasd12ad'
         }
       }
       post api_v1_users_path, params: request_body
@@ -46,7 +46,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
         user: {
           fullname: 'New User',
           email: user.email,
-          encrypted_password: 'asdasd12ad'
+          password: 'asdasd12ad'
         }
       }
       post api_v1_users_path, params: request_body
