@@ -13,6 +13,7 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
+  has_secure_password
   validates :email, :fullname, :password, presence: true
-  validates_uniqueness_of :email
+  validates :email, uniqueness: true
 end
