@@ -54,7 +54,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
   end
 
-  describe 'PUT api/v1/users/:id' do
+  describe 'PATCH api/v1/users/:id' do
     it 'updates the user' do
       user = create(:user)
       request_body = {
@@ -62,7 +62,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
           fullname: 'Updated User'
         }
       }
-      put api_v1_user_path(id: user.id), params: request_body
+      patch api_v1_user_path(id: user.id), params: request_body
       expect(response).to have_http_status(200)
     end
   end
@@ -72,6 +72,25 @@ RSpec.describe 'Api::V1::Users', type: :request do
       user = create(:user)
       delete api_v1_user_path(id: user.id)
       expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'PATCH api/v1/change_password' do
+    it 'changes user password' do
+      user = create(:user)
+      request_body = { user: {password: 'new_password'} }
+      token = JsonWebToken.encode(user_id: user.id)
+      patch api_v1_change_password_path, params: request_body, headers: {'Authorization': token}
+      expect(response).to have_http_status(200)
+    end
+
+    it 'doenot change password for invalid token' do
+      user = create(:user)
+      request_body = { user: {password: 'new_password'} }
+      token = JsonWebToken.encode(user_id: user.id)
+      token = '123213'
+      patch api_v1_change_password_path, params: request_body, headers: {'Authorization': token}
+      expect(response).to have_http_status(401)
     end
   end
 end

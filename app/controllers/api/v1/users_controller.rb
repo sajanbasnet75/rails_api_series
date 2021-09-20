@@ -3,6 +3,8 @@
 module Api
   module V1
     class UsersController < BaseController
+      before_action :authenticate_request!, only: [:change_password]
+
       # GET api/v1/users
       def index
         render jsonapi: User.all
@@ -46,6 +48,15 @@ module Api
                  status: :unprocessable_entity, code: '422'
         end
       end
+
+    # UPDATE api/v1/change_password
+    def change_password
+      if params[:user][:password] && @current_user.update(password: params[:user][:password])
+        render jsonapi: @current_user, status: :ok, code: '200'
+      else
+        render jsonapi_errors: @current_user.errors, status: :unprocessable_entity, code: '422'
+      end
+    end
 
       private
 
