@@ -10,4 +10,9 @@ Rails.application.routes.draw do
       patch 'change_password', to: 'users#change_password'
     end
   end
+
+  if defined?(Rswag)
+    mount Rswag::Ui::Engine => '/api-docs'
+    mount Rswag::Api::Engine => '/api-docs'
+  end
 end

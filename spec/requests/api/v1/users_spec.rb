@@ -25,6 +25,9 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
   end
 
+require 'rails_helper'
+
+RSpec.describe 'Api::V1::Users', type: :request do
   describe 'POST /api/v1/users/' do
     it 'creates a new user' do
       total_users = User.all.count
@@ -39,6 +42,8 @@ RSpec.describe 'Api::V1::Users', type: :request do
       expect(response).to have_http_status(201)
       expect(User.all.count).to eq(total_users + 1)
     end
+  end
+end
 
     it 'does not create a new user if email already exists' do
       user = create(:user)

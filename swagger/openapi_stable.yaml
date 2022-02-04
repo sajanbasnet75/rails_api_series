@@ -1,0 +1,67 @@
+---
+openapi: 3.0.1
+info:
+  title: Rails api
+  version: v1.0
+paths:
+  "/api/v1/change_password":
+    patch:
+      responses:
+        '200':
+          content: {}
+        '401':
+          content: {}
+  "/api/v1/login":
+    post:
+      responses:
+        '200':
+          content: {}
+  "/api/v1/users":
+    get:
+      responses:
+        '200':
+          content: {}
+    post:
+      responses:
+        '201':
+          content: {}
+        '422':
+          content: {}
+  "/api/v1/users/{id}":
+    delete:
+      responses:
+        '200':
+          content: {}
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      responses:
+        '200':
+          content: {}
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    patch:
+      responses:
+        '200':
+          content: {}
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+components:
+  securitySchemes: {}
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

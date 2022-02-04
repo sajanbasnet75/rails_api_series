@@ -1,0 +1,12 @@
+---
+name: api_app
+packages:
+- path: app/controllers
+- path: app/models
+- path: lib
+- gem: jwt
+- gem: jsonapi.rb
+- gem: jsonapi-serializer
+- gem: bcrypt
+- gem: shoulda-matchers
+- gem: factory_bot_rails

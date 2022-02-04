@@ -5,6 +5,7 @@ module Api
     class SessionsController < BaseController
       # POST /api/v1/login
       def login
+        binding.irb
         user = User.find_by(email: login_params[:email])
         if user.present? && user.authenticate(login_params[:password])
           token = JsonWebToken.encode(user_id: user.id)

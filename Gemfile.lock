@@ -63,6 +63,17 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    appmap (0.72.1)
+      activesupport
+      method_source
+      rack
+      reverse_markdown
+    appmap_swagger (0.2.0)
+      activesupport
+      hashdiff
+      rake
+      rdoc
+      reverse_markdown
     ast (2.4.2)
     bcrypt (3.1.16)
     bootsnap (1.7.7)
@@ -85,6 +96,7 @@ GEM
     ffi (1.15.3)
     globalid (0.5.2)
       activesupport (>= 5.0)
+    hashdiff (1.0.1)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jsonapi-serializer (2.2.0)
@@ -117,6 +129,8 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    psych (4.0.3)
+      stringio
     puma (5.4.0)
       nio4r (~> 2.0)
     racc (1.5.2)
@@ -158,7 +172,11 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rdoc (6.4.0)
+      psych (>= 4.0.0)
     regexp_parser (2.1.1)
+    reverse_markdown (2.1.1)
+      nokogiri
     rexml (3.2.5)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
@@ -177,6 +195,11 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
+    rswag-api (2.4.0)
+      railties (>= 3.1, < 7.0)
+    rswag-ui (2.4.0)
+      actionpack (>= 3.1, < 7.0)
+      railties (>= 3.1, < 7.0)
     rubocop (1.19.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
@@ -199,6 +222,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stringio (3.0.1)
     thor (1.1.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -213,6 +237,8 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  appmap
+  appmap_swagger
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   dotenv-rails
@@ -226,6 +252,8 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 6.1.4)
   rspec-rails (~> 5.0.0)
+  rswag-api
+  rswag-ui
   rubocop (~> 1.19)
   shoulda-matchers (~> 5.0)
   spring

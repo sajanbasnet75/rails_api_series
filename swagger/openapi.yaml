@@ -1,0 +1,86 @@
+---
+openapi: 3.0.1
+info:
+  title: Rails api
+  version: v1.0
+paths:
+  "/api/v1/change_password":
+    patch:
+      responses:
+        '200':
+          content: {}
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+      description: UPDATE api/v1/change\_password
+  "/api/v1/login":
+    post:
+      responses:
+        '200':
+          content: {}
+          description: OK
+      description: POST /api/v1/login
+  "/api/v1/users":
+    get:
+      responses:
+        '200':
+          content: {}
+          description: OK
+      description: GET api/v1/users
+    post:
+      responses:
+        '201':
+          content: {}
+          description: Created
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      description: POST api/v1/users
+  "/api/v1/users/{id}":
+    delete:
+      responses:
+        '200':
+          content: {}
+          description: OK
+      description: DELETE api/v1/users/:id
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+          example: '155'
+        required: true
+    get:
+      responses:
+        '200':
+          content: {}
+          description: OK
+      description: GET api/v1/users/:id
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+          example: '151'
+        required: true
+    patch:
+      responses:
+        '200':
+          content: {}
+          description: OK
+      description: PUT/PATCH api/v1/users/:id
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+          example: '154'
+        required: true
+components:
+  securitySchemes: {}
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
