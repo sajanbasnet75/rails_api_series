@@ -35,6 +35,11 @@ gem 'jsonapi-serializer'
 # for authentication
 gem 'jwt'
 
+# for api documentation
+gem 'rswag'
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development, :test do
   gem 'annotate'
   # debugger
@@ -43,6 +48,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   # for TDD
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rswag-specs'
   # linter
   gem 'rubocop', '~> 1.19', require: false
 end

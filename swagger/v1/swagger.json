@@ -1,0 +1,340 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "1.0.0",
+    "description": "API Docs"
+  },
+  "paths": {
+    "/api/v1/login": {
+      "parameters": [
+        {
+          "name": "login_params",
+          "in": "body",
+          "schema": {
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "post": {
+        "summary": "login session",
+        "tags": [
+          "Sessions"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "402",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "Sajan",
+                      "gender": 1,
+                      "email": "test@1.com",
+                      "auth_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0MDIsImV4cCI6MTY0NjUwMDcxOX0.krFp7aDzqmXxHYqtYtjHiJhmssA4fFvoutMikgiHnLg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "summary": "list users",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "403",
+                      "type": "user",
+                      "attributes": {
+                        "fullname": "Sajan",
+                        "gender": 1,
+                        "email": "test@1.com",
+                        "auth_token": null
+                      }
+                    },
+                    {
+                      "id": "404",
+                      "type": "user",
+                      "attributes": {
+                        "fullname": "Sajan",
+                        "gender": 1,
+                        "email": "test@2.com",
+                        "auth_token": null
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create user",
+        "parameters": [
+          {
+            "name": "user_params",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "fullname": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "password": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "201": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "407",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "New User",
+                      "gender": null,
+                      "email": "new@gmail.com",
+                      "auth_token": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "description": "User id",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "show user",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "408",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "Sajan",
+                      "gender": 1,
+                      "email": "test@1.com",
+                      "auth_token": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update user",
+        "parameters": [
+          {
+            "name": "user_params",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "fullname": {
+                      "type": "string",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "410",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "Updated User Name",
+                      "gender": 1,
+                      "email": "test@1.com",
+                      "auth_token": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete user",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "412",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "Sajan",
+                      "gender": 1,
+                      "email": "test@1.com",
+                      "auth_token": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/change_password": {
+      "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "type": "string"
+        }
+      ],
+      "patch": {
+        "summary": "change_password user",
+        "parameters": [
+          {
+            "name": "user_params",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "414",
+                    "type": "user",
+                    "attributes": {
+                      "fullname": "Sajan",
+                      "gender": 1,
+                      "email": "test@1.com",
+                      "auth_token": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "servers": [
+    {
+      "url": "http://{defaultHost}",
+      "variables": {
+        "defaultHost": {
+          "default": "localhost:3000"
+        }
+      }
+    }
+  ]
+}

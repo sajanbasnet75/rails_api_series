@@ -1,96 +1,186 @@
-# frozen_string_literal: true
+require 'swagger_helper'
 
-require 'rails_helper'
+RSpec.describe 'api/v1/users', type: :request do
+  let!(:user1) { create(:user, email: 'test@1.com') }
+  let!(:user2) { create(:user, email: 'test@2.com') }
+  let!(:total_users) { User.all.count }
 
-RSpec.describe 'Api::V1::Users', type: :request do
-  describe 'GET api/v1/users' do
-    it 'returns list of available users' do
-      create(:user)
-      total_users = User.all.count
-      get api_v1_users_path
-      expect(response).to have_http_status(200)
-      resp = JSON.parse(response.body)
-      expect(resp['data'].count).to eq(total_users)
+  path '/api/v1/users' do
+    get('list users') do
+      response(200, 'successful') do
+        tags 'Users'
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test! do |response|
+          resp = JSON.parse(response.body, symbolize_names: true)
+          expect(resp[:data].count).to eq(total_users)
+        end
+      end
     end
-  end
 
-  describe 'GET api/v1/users/:id' do
-    it 'returns a user' do
-      user = create(:user)
-      expected_response = { 'email' => user.email }
-      get api_v1_user_path(id: user.id)
-      expect(response).to have_http_status(200)
-      resp = JSON.parse(response.body)
-      expect(resp['data']['attributes']).to include(expected_response)
-    end
-  end
-
-  describe 'POST /api/v1/users/' do
-    it 'creates a new user' do
-      total_users = User.all.count
-      request_body = {
-        user: {
-          fullname: 'New User',
-          email: 'new@gmail.com',
-          password: 'asdasd12ad'
+    post('create user') do
+      parameter name: :user_params, in: :body, schema: {
+        properties: {
+          user: {
+            type: :object,
+            properties: {
+              fullname: { type: :string, required: true },
+              email: { type: :string, required: true },
+              password: { type: :string, required: true }
+            }
+          }
         }
       }
-      post api_v1_users_path, params: request_body
-      expect(response).to have_http_status(201)
-      expect(User.all.count).to eq(total_users + 1)
+
+      response(201, 'successful') do
+        tags 'Users'
+
+        request_body = {
+          user: {
+            fullname: 'New User',
+            email: 'new@gmail.com',
+            password: 'asdasd12ad'
+          }
+        }
+
+        let!(:user_params) { request_body }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test! do |_response|
+          expect(User.all.count).to eq(total_users + 1)
+        end
+      end
+    end
+  end
+
+  path '/api/v1/users/{id}' do
+    parameter name: 'id', in: :path, type: :string, description: 'User id'
+
+    get('show user') do
+      response(200, 'successful') do
+        tags 'Users'
+
+        let(:id) { user1.id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test! do |response|
+          resp = JSON.parse(response.body, symbolize_names: true)
+          expect(resp[:data][:attributes][:email]).to eq(user1.email)
+        end
+      end
     end
 
-    it 'does not create a new user if email already exists' do
-      user = create(:user)
-      request_body = {
-        user: {
-          fullname: 'New User',
-          email: user.email,
-          password: 'asdasd12ad'
+    patch('update user') do
+      parameter name: :user_params, in: :body, schema: {
+        properties: {
+          user: {
+            type: :object,
+            properties: {
+              fullname: { type: :string, required: false }
+            }
+          }
         }
       }
-      post api_v1_users_path, params: request_body
-      expect(response).to have_http_status(422)
+
+      response(200, 'successful') do
+        tags 'Users'
+
+        request_body = {
+          user: {
+            fullname: 'Updated User Name'
+          }
+        }
+
+        let!(:user_params) { request_body }
+        let(:id) { user1.id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test! do |_response|
+          user1.reload
+          expect(user1.fullname).to eq('Updated User Name')
+        end
+      end
+    end
+
+    delete('delete user') do
+      response(200, 'successful') do
+        tags 'Users'
+
+        let(:id) { user1.id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test! do |_response|
+          expect(User.all.count).to eq(total_users - 1)
+        end
+      end
     end
   end
 
-  describe 'PATCH api/v1/users/:id' do
-    it 'updates the user' do
-      user = create(:user)
-      request_body = {
-        user: {
-          fullname: 'Updated User'
+  path '/api/v1/change_password' do
+    parameter name: 'Authorization', in: :header, type: :string
+
+    patch('change_password user') do
+      parameter name: :user_params, in: :body, schema: {
+        properties: {
+          user: {
+            type: :object,
+            properties: {
+              password: { type: :string, required: true }
+            }
+          }
         }
       }
-      patch api_v1_user_path(id: user.id), params: request_body
-      expect(response).to have_http_status(200)
-    end
-  end
 
-  describe 'DELETE api/v1/users/:id' do
-    it 'deletes the user' do
-      user = create(:user)
-      delete api_v1_user_path(id: user.id)
-      expect(response).to have_http_status(200)
-    end
-  end
+      response(200, 'successful') do
+        tags 'Users'
 
-  describe 'PATCH api/v1/change_password' do
-    it 'changes user password' do
-      user = create(:user)
-      request_body = { user: {password: 'new_password'} }
-      token = JsonWebToken.encode(user_id: user.id)
-      patch api_v1_change_password_path, params: request_body, headers: {'Authorization': token}
-      expect(response).to have_http_status(200)
-    end
+        request_body = {
+          user: {
+            password: 'updated password'
+          }
+        }
 
-    it 'doenot change password for invalid token' do
-      user = create(:user)
-      request_body = { user: {password: 'new_password'} }
-      token = JsonWebToken.encode(user_id: user.id)
-      token = '123213'
-      patch api_v1_change_password_path, params: request_body, headers: {'Authorization': token}
-      expect(response).to have_http_status(401)
+        let!(:user_params) { request_body }
+        let!(:Authorization) { 'Bearer ' + JsonWebToken.encode(user_id: user1.id) }
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
     end
   end
 end

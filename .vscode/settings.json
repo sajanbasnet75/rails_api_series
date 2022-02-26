@@ -1,0 +1,10 @@
+{
+  "workbench.colorCustomizations": {
+    "tab.activeBorder": "#ff0000",
+    "titleBar.activeBackground": "#ff0000",
+    "titleBar.activeForeground": "#000000",
+    "statusBar.background": "#ff0000",
+    "statusBar.foreground": "#000000"
+  },
+  "window.title": "~[Model]~${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}"
+}
